@@ -1,39 +1,46 @@
-.App {
+/* =========================
+   Tarjetas de personajes
+========================= */
+.tarjeta-personaje {
+  background-color: #111111; /* fondo oscuro */
+  border-radius: 20px;
+  padding: 15px;
   text-align: center;
+  box-shadow: 0 0 15px rgba(255,255,255,0.1); /* sombra sutil */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.tarjeta-personaje:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 0 25px rgba(255,255,255,0.2), 0 0 10px rgba(255,255,255,0.1) inset;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Imagen circular con borde oscuro */
+.tarjeta-personaje img {
+  border-radius: 50%;
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border: 3px solid #222222; /* borde oscuro */
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  margin-bottom: 12px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+/* Nombre del personaje: claro para contraste */
+.tarjeta-personaje h3 {
+  margin: 10px 0 6px;
+  font-weight: 900;
+  color: #f5f5f5; /* blanco/gris claro para legibilidad */
+  text-shadow: 0 0 4px rgba(255,255,255,0.2); /* sombra sutil para resaltar */
+  font-size: 18px;
 }
 
-.App-link {
-  color: #61dafb;
+/* Especie y estado: texto claro */
+.tarjeta-personaje p {
+  margin: 2px 0;
+  font-weight: 600;
+  font-size: 14px;
+  color: #cccccc; /* gris claro */
+  text-shadow: 0 0 2px rgba(255,255,255,0.1);
+  font-style: italic;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-

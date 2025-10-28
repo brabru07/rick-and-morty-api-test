@@ -1,24 +1,33 @@
 import { useEffect, useState } from 'react';
+import debounce from 'lodash.debounce'; // 🧩 Importamos debounce desde lodash
 import './App.css';
 
 function App() {
-  const [personajes, setPersonajes] = useState([]);
-  const [cargando, setCargando] = useState(true);
-  const [error, setError] = useState(null);
-  const [paginaActual, setPaginaActual] = useState(1);
-  const [busqueda, setBusqueda] = useState('');
-  const [totalPaginas, setTotalPaginas] = useState(null);
+  // 🧠 Estados principales
+  const [personajes, setPersonajes] = useState([]);   // Lista de personajes
+  const [cargando, setCargando] = useState(true);     // Indicador de carga
+  const [error, setError] = useState(null);           // Manejo de errores
+  const [paginaActual, setPaginaActual] = useState(1); // Página actual
+  const [busqueda, setBusqueda] = useState('');        // Texto de búsqueda
+  const [totalPaginas, setTotalPaginas] = useState(null); // Total de páginas
 
-  // useEffect para cargar personajes, con filtro por nombre y paginación
+  // 🕒 Función con debounce (espera 500 ms antes de buscar)
+  const handleBusquedaChange = debounce((valor) => {
+    setBusqueda(valor);
+    setPaginaActual(1); // Reinicia la paginación al cambiar la búsqueda
+  }, 500);
+
+  // 🔍 useEffect para cargar los personajes desde la API
   useEffect(() => {
     setCargando(true);
     setError(null);
 
-    // Usamos la URL de la API según si hay filtro de búsqueda o no
+    // Creamos la URL según haya o no búsqueda activa
     const url = busqueda
       ? `https://rickandmortyapi.com/api/character/?name=${encodeURIComponent(busqueda)}&page=${paginaActual}`
       : `https://rickandmortyapi.com/api/character/?page=${paginaActual}`;
 
+    // Llamada a la API
     fetch(url)
       .then((res) => {
         if (!res.ok) throw new Error('No se encontraron personajes');
@@ -31,28 +40,54 @@ function App() {
       })
       .catch((err) => {
         setError(err.message);
-        setPersonajes([]); // Limpiamos si no hay resultados
+        setPersonajes([]); // Si hay error, limpiamos resultados
         setCargando(false);
       });
   }, [paginaActual, busqueda]);
 
-  if (cargando) return <p style={{ textAlign: 'center' }}>Cargando personajes...</p>;
-  if (error) return <p style={{ textAlign: 'center' }}>Error: {error}</p>;
+  // 🧹 Cancelamos el debounce al desmontar el componente
+  useEffect(() => {
+    return () => {
+      handleBusquedaChange.cancel();
+    };
+  }, []);
 
+  // 🧭 Renderizado condicional (mientras carga o hay error)
+  if (cargando) return <p style={{ textAlign: 'center' }}>Cargando personajes...</p>;
+  if (error) {
+  return (
+    <div style={{ textAlign: 'center', marginTop: '50px' }}>
+      <p style={{ fontSize: '18px', color: '#e74c3c' }}>Error: {error}</p>
+      <button
+        onClick={() => window.location.reload()}
+        style={{
+          marginTop: '15px',
+          padding: '10px 20px',
+          backgroundColor: '#3498db',
+          color: 'white',
+          border: 'none',
+          borderRadius: '5px',
+          cursor: 'pointer'
+        }}
+      >
+        Recargar página
+      </button>
+    </div>
+  );
+}
+
+
+  // 🎨 Interfaz de usuario
   return (
     <div style={{ padding: '20px', fontFamily: 'Arial' }}>
       <h1 style={{ textAlign: 'center' }}>Rick and Morty - Personajes</h1>
 
-      {/* Búsqueda */}
+      {/* 🔎 Campo de búsqueda */}
       <div style={{ textAlign: 'center', margin: '20px 0' }}>
         <input
           type="text"
           placeholder="Buscar personaje por nombre..."
-          value={busqueda}
-          onChange={(e) => {
-            setBusqueda(e.target.value);
-            setPaginaActual(1); // Reset a la página 1 al buscar
-          }}
+          onChange={(e) => handleBusquedaChange(e.target.value)} // 👈 Usamos debounce aquí
           style={{
             padding: '10px',
             fontSize: '16px',
@@ -63,13 +98,15 @@ function App() {
         />
       </div>
 
-      {/* Paginación */}
-      <div style={{
-        display: 'flex',
-        justifyContent: 'center',
-        gap: '10px',
-        marginBottom: '20px'
-      }}>
+      {/* 📄 Paginación superior */}
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          gap: '10px',
+          marginBottom: '20px'
+        }}
+      >
         <button
           onClick={() => setPaginaActual((prev) => Math.max(prev - 1, 1))}
           disabled={paginaActual === 1}
@@ -85,7 +122,9 @@ function App() {
           Anterior
         </button>
 
-        <span style={{ paddingTop: '10px' }}>Página {paginaActual} de {totalPaginas}</span>
+        <span style={{ paddingTop: '10px' }}>
+          Página {paginaActual} de {totalPaginas}
+        </span>
 
         <button
           onClick={() => setPaginaActual((prev) => Math.min(prev + 1, totalPaginas))}
@@ -103,7 +142,7 @@ function App() {
         </button>
       </div>
 
-      {/* Grid de personajes */}
+      {/* 🧱 Grid de personajes */}
       <div
         style={{
           display: 'grid',
@@ -112,8 +151,26 @@ function App() {
         }}
       >
         {personajes.length === 0 ? (
-          <p style={{ gridColumn: '1 / -1', textAlign: 'center' }}>No se encontraron personajes.</p>
+          // 🟥 Si no hay resultados, mostramos botón para recargar
+          <div style={{ gridColumn: '1 / -1', textAlign: 'center' }}>
+            <p>No se encontraron personajes.</p>
+            <button
+              onClick={() => window.location.reload()}
+              style={{
+                marginTop: '10px',
+                padding: '10px 20px',
+                backgroundColor: '#e74c3c',
+                color: 'white',
+                border: 'none',
+                borderRadius: '5px',
+                cursor: 'pointer'
+              }}
+            >
+              Recargar página
+            </button>
+          </div>
         ) : (
+          // 🟩 Si hay resultados, renderizamos las tarjetas
           personajes.map((personaje) => (
             <div
               key={personaje.id}
@@ -143,6 +200,50 @@ function App() {
             </div>
           ))
         )}
+      </div>
+
+      {/* 📄 Paginación inferior */}
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          gap: '10px',
+          margin: '20px 0'
+        }}
+      >
+        <button
+          onClick={() => setPaginaActual((prev) => Math.max(prev - 1, 1))}
+          disabled={paginaActual === 1}
+          style={{
+            padding: '10px 20px',
+            backgroundColor: '#8e44ad',
+            color: 'white',
+            border: 'none',
+            borderRadius: '5px',
+            cursor: paginaActual === 1 ? 'not-allowed' : 'pointer'
+          }}
+        >
+          Anterior
+        </button>
+
+        <span style={{ paddingTop: '10px' }}>
+          Página {paginaActual} de {totalPaginas}
+        </span>
+
+        <button
+          onClick={() => setPaginaActual((prev) => Math.min(prev + 1, totalPaginas))}
+          disabled={paginaActual === totalPaginas}
+          style={{
+            padding: '10px 20px',
+            backgroundColor: '#27ae60',
+            color: 'white',
+            border: 'none',
+            borderRadius: '5px',
+            cursor: paginaActual === totalPaginas ? 'not-allowed' : 'pointer'
+          }}
+        >
+          Siguiente
+        </button>
       </div>
     </div>
   );
