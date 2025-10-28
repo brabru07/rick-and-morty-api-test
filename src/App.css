@@ -44,3 +44,173 @@
   text-shadow: 0 0 2px rgba(255,255,255,0.1);
   font-style: italic;
 }
+/* =========================
+   Tarjetas de personajes
+========================= */
+.tarjeta-personaje {
+  background-color: #1a1a1a; /* Fondo más oscuro que el body */
+  border-radius: 20px;
+  padding: 15px;
+  text-align: center;
+  /* Borde neón */
+  border: 2px solid #40c0cb; 
+  box-shadow: 0 0 10px rgba(64, 192, 203, 0.4); 
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tarjeta-personaje:hover {
+  transform: scale(1.05); /* Usaremos scale para un mejor efecto visual */
+  /* Brillo neón intenso al pasar el ratón */
+  box-shadow: 0 0 25px rgba(64, 192, 203, 0.8), 0 0 15px rgba(197, 248, 80, 0.5); 
+}
+
+/* Imagen circular con borde neón */
+.tarjeta-personaje img {
+  border-radius: 50%;
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border: 4px solid #c5f850; /* Borde verde neón */
+  box-shadow: 0 0 15px rgba(197, 248, 80, 0.6);
+  margin-bottom: 12px;
+}
+
+/* Nombre del personaje: más neón */
+.tarjeta-personaje h3 {
+  margin: 10px 0 6px;
+  font-weight: 900;
+  color: #40c0cb; /* Cian neón */
+  text-shadow: 0 0 8px rgba(64, 192, 203, 0.8);
+  font-size: 20px;
+}
+
+/* Especie y estado: texto claro */
+.tarjeta-personaje p {
+  margin: 2px 0;
+  font-weight: 600;
+  font-size: 14px;
+  color: #f5f5f5; /* Blanco para legibilidad */
+  text-shadow: 0 0 2px rgba(0,0,0,0.5);
+  font-style: italic;
+}
+
+/* Estilo para el contenedor de la paginación */
+.paginacion-contenedor {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 30px 0;
+}
+
+/* Estilo para los botones de paginación */
+.btn-paginacion {
+  padding: 12px 25px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.btn-paginacion:hover:not(:disabled) {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+.btn-paginacion:disabled {
+  opacity: 0.5;
+  cursor: not-allowed !important;
+  box-shadow: none;
+}
+
+.btn-anterior {
+  background-color: #ff66d0; /* Rosa/Magenta */
+  color: #0b0c10;
+}
+
+.btn-siguiente {
+  background-color: #c5f850; /* Verde Neón */
+  color: #0b0c10;
+}
+
+.texto-paginacion {
+    padding-top: 10px;
+    font-weight: bold;
+    color: #40c0cb;
+}
+
+/* index.css (Mantenemos la base de colores) */
+/* ... (El resto de index.css sigue igual) */
+
+/* =========================
+   Tarjetas de personajes (Mantienen el estilo neón)
+========================= */
+.tarjeta-personaje {
+  /* ... (Mantenemos los estilos de tarjeta de la respuesta anterior) ... */
+  background-color: #1a1a1a;
+  border-radius: 20px;
+  padding: 15px;
+  text-align: center;
+  border: 2px solid #40c0cb; 
+  box-shadow: 0 0 10px rgba(64, 192, 203, 0.4); 
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tarjeta-personaje:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(64, 192, 203, 0.8), 0 0 15px rgba(197, 248, 80, 0.5); 
+}
+
+/* ... (El resto de estilos de img, h3, p dentro de .tarjeta-personaje) ... */
+
+/* =========================
+   Nuevo Estilo de Paginación (Más Limpio)
+========================= */
+
+.paginacion-contenedor {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Alineamos verticalmente el texto */
+    gap: 15px;
+    margin: 30px 0;
+}
+
+.btn-paginacion {
+  padding: 12px 20px;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  
+  /* Estilo Moderno */
+  background-color: #40c0cb; /* Cian */
+  color: #0b0c10;
+  box-shadow: 0 0 10px rgba(64, 192, 203, 0.5); /* Sombra neón sutil */
+}
+
+.btn-paginacion:hover:not(:disabled) {
+  background-color: #c5f850; /* Verde neón al pasar el ratón */
+  box-shadow: 0 0 15px rgba(197, 248, 80, 0.8);
+  transform: translateY(-1px);
+}
+
+.btn-paginacion:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.texto-paginacion {
+    font-weight: bold;
+    color: #f5f5f5; /* Blanco limpio */
+    font-size: 18px;
+    padding: 0 10px;
+}
+@media (min-width: 1024px) {
+    .personajes-grid {
+        grid-template-columns: repeat(4, 1fr); /* 4 columnas de igual ancho */
+    }
+}
