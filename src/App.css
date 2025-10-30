@@ -2,13 +2,32 @@
    Tarjetas de personajes
 ========================= */
 .tarjeta-personaje {
-  background-color: #111111; /* fondo oscuro */
+  background-color: #1a1a1a;
   border-radius: 20px;
   padding: 15px;
   text-align: center;
-  box-shadow: 0 0 15px rgba(255,255,255,0.1); /* sombra sutil */
+  border: 2px solid #40c0cb;
+  box-shadow: 0 0 10px rgba(64, 192, 203, 0.4);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  /* 🔧 NUEVO: mismo tamaño visual */
+  width: 220px;      /* ancho fijo consistente */
+  height: 300px;     /* altura uniforme */
+  display: flex;     
+  flex-direction: column;
+  justify-content: space-between; /* distribuye imagen y texto */
 }
+
+.tarjeta-personaje img {
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border: 4px solid #c5f850;
+  box-shadow: 0 0 15px rgba(197, 248, 80, 0.6);
+  margin: 0 auto 12px auto; /* centra horizontalmente */
+}
+
 
 .tarjeta-personaje:hover {
   transform: translateY(-10px);
@@ -209,6 +228,32 @@
     font-size: 18px;
     padding: 0 10px;
 }
+/* GRID DE PERSONAJES (Responsive 4x4)*/
+.personajes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* se adapta automáticamente */
+  gap: 25px; /* separación entre tarjetas */
+  justify-items: center;
+  align-items: start;
+  padding: 20px;
+}
+
+.personajes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+  justify-content: center;  /* centra el grid */
+  align-items: start;
+  padding: 20px;
+}
+
+/* En pantallas grandes (>=1024px): fuerza 4 columnas exactas */
+@media (min-width: 1024px) {
+  .personajes-grid {
+    grid-template-columns: repeat(4, 1fr); /* 4 columnas iguales */
+  }
+}
+
 @media (min-width: 1024px) {
     .personajes-grid {
         grid-template-columns: repeat(4, 1fr); /* 4 columnas de igual ancho */
