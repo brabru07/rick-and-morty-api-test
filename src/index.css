@@ -1,0 +1,57 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+/* index.css */
+@import url('https://fonts.googleapis.com/css2?family=Creepster&family=Roboto:wght@400;700&display=swap');
+
+body {
+  margin: 0;
+  /* Fondo oscuro general para el ambiente */
+  background-color: #0b0c10; 
+  color: #c5f850; /* Color principal de texto verde neón */
+  font-family: 'Roboto', sans-serif; /* Fuente base legible */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Estilo para el título de la app */
+h1 {
+  font-family: 'Creepster', cursive; /* Fuente llamativa estilo cómic/terror */
+  font-size: 5rem;
+  color: #40c0cb; /* Azul/Cian brillante */
+  text-shadow: 
+    3px 3px 0px #c5f850, /* Sombra neón verde */
+    5px 5px 0px #ff66d0, /* Sombra rosa/magenta */
+    7px 7px 0px #0b0c10; /* Sombra oscura para profundidad */
+  margin-bottom: 40px;
+  letter-spacing: 5px;
+}
+
+/* Mejoras para el campo de búsqueda */
+input[type="text"] {
+  background-color: #222;
+  color: #c5f850;
+  border: 2px solid #40c0cb !important; /* Borde de contraste */
+  box-shadow: 0 0 10px rgba(64, 192, 203, 0.5);
+  transition: all 0.3s ease;
+}
+
+input[type="text"]:focus {
+  box-shadow: 0 0 15px rgba(64, 192, 203, 0.8), inset 0 0 5px #c5f850;
+  outline: none;
+}
